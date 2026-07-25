@@ -46,6 +46,7 @@ module.exports = {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
         ring: 'hsl(var(--ring))',
+        brand: 'hsl(var(--brand))',
         chart: {
           '1': 'hsl(var(--chart-1))',
           '2': 'hsl(var(--chart-2))',
@@ -71,6 +72,11 @@ module.exports = {
             height: '0'
           }
         }
+      },
+      fontFamily: {
+        display: ['"Clash Display"', 'Georgia', 'serif'],
+        sans: ['Outfit', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+        serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',

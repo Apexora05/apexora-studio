@@ -1,75 +1,55 @@
+@import url("https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-body {
-    margin: 0;
-    font-family:
-        -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
-        "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
-        sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-code {
-    font-family:
-        source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
-}
-
 @layer base {
     :root {
         --background: 0 0% 100%;
-        --foreground: 0 0% 3.9%;
+        --foreground: 0 0% 7%;
         --card: 0 0% 100%;
-        --card-foreground: 0 0% 3.9%;
+        --card-foreground: 0 0% 7%;
         --popover: 0 0% 100%;
-        --popover-foreground: 0 0% 3.9%;
-        --primary: 0 0% 9%;
+        --popover-foreground: 0 0% 7%;
+        --primary: 0 0% 7%;
         --primary-foreground: 0 0% 98%;
-        --secondary: 0 0% 96.1%;
-        --secondary-foreground: 0 0% 9%;
-        --muted: 0 0% 96.1%;
-        --muted-foreground: 0 0% 45.1%;
-        --accent: 0 0% 96.1%;
-        --accent-foreground: 0 0% 9%;
-        --destructive: 0 84.2% 60.2%;
+        --secondary: 210 20% 98%;
+        --secondary-foreground: 0 0% 7%;
+        --muted: 210 20% 98%;
+        --muted-foreground: 220 9% 46%;
+        --accent: 210 20% 96%;
+        --accent-foreground: 0 0% 7%;
+        --destructive: 0 72% 51%;
         --destructive-foreground: 0 0% 98%;
-        --border: 0 0% 89.8%;
-        --input: 0 0% 89.8%;
-        --ring: 0 0% 3.9%;
-        --chart-1: 12 76% 61%;
-        --chart-2: 173 58% 39%;
-        --chart-3: 197 37% 24%;
-        --chart-4: 43 74% 66%;
-        --chart-5: 27 87% 67%;
+        --border: 220 13% 91%;
+        --input: 220 13% 91%;
+        --ring: 221 83% 53%;
+        --brand: 221 83% 53%;
         --radius: 0.5rem;
     }
     .dark {
-        --background: 0 0% 3.9%;
-        --foreground: 0 0% 98%;
-        --card: 0 0% 3.9%;
-        --card-foreground: 0 0% 98%;
-        --popover: 0 0% 3.9%;
-        --popover-foreground: 0 0% 98%;
-        --primary: 0 0% 98%;
-        --primary-foreground: 0 0% 9%;
-        --secondary: 0 0% 14.9%;
-        --secondary-foreground: 0 0% 98%;
-        --muted: 0 0% 14.9%;
-        --muted-foreground: 0 0% 63.9%;
-        --accent: 0 0% 14.9%;
-        --accent-foreground: 0 0% 98%;
-        --destructive: 0 62.8% 30.6%;
+        --background: 0 0% 4%;
+        --foreground: 210 20% 98%;
+        --card: 0 0% 4%;
+        --card-foreground: 210 20% 98%;
+        --popover: 0 0% 5%;
+        --popover-foreground: 210 20% 98%;
+        --primary: 210 20% 98%;
+        --primary-foreground: 0 0% 7%;
+        --secondary: 0 0% 7%;
+        --secondary-foreground: 210 20% 98%;
+        --muted: 0 0% 10%;
+        --muted-foreground: 220 9% 65%;
+        --accent: 0 0% 10%;
+        --accent-foreground: 210 20% 98%;
+        --destructive: 0 62% 45%;
         --destructive-foreground: 0 0% 98%;
-        --border: 0 0% 14.9%;
-        --input: 0 0% 14.9%;
-        --ring: 0 0% 83.1%;
-        --chart-1: 220 70% 50%;
-        --chart-2: 160 60% 45%;
-        --chart-3: 30 80% 55%;
-        --chart-4: 280 65% 60%;
-        --chart-5: 340 75% 55%;
+        --border: 215 28% 17%;
+        --input: 215 28% 17%;
+        --ring: 217 91% 60%;
+        --brand: 217 91% 60%;
     }
 }
 
@@ -77,39 +57,78 @@ code {
     * {
         @apply border-border;
     }
+    html {
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        text-rendering: optimizeLegibility;
+    }
     body {
         @apply bg-background text-foreground;
+        font-family: "Outfit", ui-sans-serif, system-ui, sans-serif;
+        margin: 0;
+        overflow-x: hidden;
+    }
+    ::selection {
+        background: hsl(var(--brand));
+        color: #ffffff;
+    }
+    h1, h2, h3, h4 {
+        font-family: "Clash Display", Georgia, serif;
+        font-weight: 600;
     }
 }
 
-@layer base {
-    [data-debug-wrapper="true"] {
-        display: contents !important;
+@layer utilities {
+    .font-display { font-family: "Clash Display", Georgia, serif; }
+    .font-serif-accent { font-family: "Cormorant Garamond", Georgia, serif; }
+    .text-brand { color: hsl(var(--brand)); }
+    .bg-brand { background-color: hsl(var(--brand)); }
+    .border-brand { border-color: hsl(var(--brand)); }
+
+    /* Grain / noise overlay */
+    .grain::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: 1;
+        pointer-events: none;
+        opacity: 0.025;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
     }
 
-    [data-debug-wrapper="true"] > * {
-        margin-left: inherit;
-        margin-right: inherit;
-        margin-top: inherit;
-        margin-bottom: inherit;
-        padding-left: inherit;
-        padding-right: inherit;
-        padding-top: inherit;
-        padding-bottom: inherit;
-        column-gap: inherit;
-        row-gap: inherit;
-        gap: inherit;
-        border-left-width: inherit;
-        border-right-width: inherit;
-        border-top-width: inherit;
-        border-bottom-width: inherit;
-        border-left-style: inherit;
-        border-right-style: inherit;
-        border-top-style: inherit;
-        border-bottom-style: inherit;
-        border-left-color: inherit;
-        border-right-color: inherit;
-        border-top-color: inherit;
-        border-bottom-color: inherit;
+    /* Line reveal masks */
+    .reveal-line { display: block; overflow: hidden; }
+
+    /* Marquee */
+    @keyframes marquee-x {
+        from { transform: translateX(0); }
+        to { transform: translateX(-50%); }
     }
+    .marquee-track {
+        display: inline-flex;
+        white-space: nowrap;
+        animation: marquee-x 28s linear infinite;
+    }
+
+    .glass {
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+    }
+
+    .hide-scrollbar::-webkit-scrollbar { display: none; }
+    .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+/* Smooth scroll (lenis) */
+html.lenis, html.lenis body { height: auto; }
+.lenis.lenis-smooth { scroll-behavior: auto !important; }
+.lenis.lenis-stopped { overflow: hidden; }
+
+@media (prefers-reduced-motion: reduce) {
+    .marquee-track { animation: none; }
+    * { scroll-behavior: auto !important; }
+}
+
+@layer base {
+    [data-debug-wrapper="true"] { display: contents !important; }
 }

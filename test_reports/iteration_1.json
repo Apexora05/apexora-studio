@@ -1,0 +1,46 @@
+{
+  "summary": "Full backend + frontend regression for Apexora Studio CMS. Backend: 33/34 tests passed, 1 xfail (brute-force lockout not triggered — real IP-behind-proxy bug). Frontend public + admin flows tested and pass: home renders all sections; theme toggle switches light/dark and persists after reload; portfolio/case-study/blog/contact/404 render; admin login (admin@apexora.studio / Apexora@2025) works; portfolio manager add/save flow works and item appears in table; home page editor + settings + enquiries + media library + users pages all load; logout returns to /admin login.",
+  "backend_issues": {
+    "critical": [
+      {
+        "endpoint": "/api/auth/login",
+        "issue": "Brute-force lockout NEVER triggers behind the k8s ingress. request.client.host returns different pod-facing IPs (10.79.151.158 / 10.79.151.159) across attempts, so the login_attempts key 'ip:email' splits across records and count never reaches MAX_ATTEMPTS. After 7 wrong-password attempts, still 401 (expected 429 after 5). Fix: use X-Forwarded-For (first hop) or lock purely by email once persistent identifier is chosen. Verified by inspecting db.login_attempts — two rows per test email under two different IPs.",
+        "priority": "HIGH"
+      }
+    ],
+    "minor": []
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": [
+      {"screen": "Home (portfolio card image tag)", "issues": ["Console warning: 'An empty string (\"\") was passed to the src attribute' — some <img> element renders with empty src (likely a project without image). Consider guarding <img src={x} /> with a fallback or omitting when src is empty to avoid the double network fetch warning."]}
+    ]
+  },
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "Fix brute-force lockout IP detection: read X-Forwarded-For (or use email-only identifier) so 5 wrong-password attempts return 429. Currently completely bypassed behind ingress.",
+    "Optionally: guard <img src=...> against empty string to remove the browser 'empty src' warning on Home."
+  ],
+  "critical_code_review_comments": [
+    "auth.py::login uses request.client.host directly — unreliable behind reverse proxy / k8s ingress; either honor X-Forwarded-For or drop IP from the identifier to make rate limiting effective.",
+    "routes_content.py::create_enquiry has the same request.client.host pattern for the 5/hour enquiry rate limit — likely also bypassable by hitting different pods; same fix applies.",
+    "routes_content.py::update_page uses get_current_user (any authenticated user) rather than require_admin — editors can edit pages. If page editing should be admin-only, tighten the dependency. (Not tested against spec — flagging for confirmation.)",
+    "routes_content.py::register_collection admin create/update/delete depend on get_current_user (editors allowed). This matches spec ('admin/editor for content'), so OK.",
+    "auth.py: password reset link is only logged (RESEND_API_KEY empty) — acceptable per instructions but ensure production monitors this.",
+    "seed_admin only resets password if the admin doc already exists but hash mismatches — idempotent. Good."
+  ],
+  "updated_files": [
+    "/app/backend/tests/backend_test.py"
+  ],
+  "success_rate": {"backend": "97% (33/34, 1 xfail real bug)", "frontend": "100% of tested flows"},
+  "test_credentials": "admin@apexora.studio / Apexora@2025 (verified working)",
+  "seed_data_creation": "None retained. Tests create TEST_-prefixed docs and clean up. Ran additional cleanup script post-run.",
+  "retest_needed": true,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Backend suite at /app/backend/tests/backend_test.py covers settings/pages/public content/auth/CRUD/enquiries/media/users/SEO/stats. Brute-force lockout is marked xfail — remove xfail after main agent fixes IP detection. Frontend admin data-testids verified: login-email, login-password, login-submit, add-portfolio, field-title, save-portfolio, page-save, export-csv, admin-logout. Dashboard stat cards do NOT use 'stat-' testid prefix (informational, not a bug).",
+  "rca of the issue": "Brute-force lockout bypass: In auth.py::login the identifier is f'{ip}:{email}' where ip = request.client.host. Inside the k8s cluster, this is the ingress/proxy pod's internal IP, and load balancing rotates it between pods (observed 10.79.151.158 and 10.79.151.159 alternating). Because MongoDB stores separate rows per identifier, no single row reaches count>=5 within one attack burst, so the 429 branch is never taken. Repro: hit /api/auth/login 6+ times with wrong password for the same email — all return 401. Mitigation: parse X-Forwarded-For (client IP is the first entry) OR change identifier to email-only OR count by email in a single query."
+}
