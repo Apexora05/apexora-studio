@@ -61,9 +61,9 @@ class LoginBody(BaseModel):
 
 
 async def get_current_user(
-    credentials: HTTPAuthorizationCredentials = Depends(security)
+    credentials: HTTPAuthorizationCredentials = Depends(HTTPBearer())
 ) -> dict:
-
+    
     token = credentials.credentials
 
     try:
