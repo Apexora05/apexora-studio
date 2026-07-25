@@ -1,5 +1,22 @@
-from fastapi import APIRouter, HTTPException, Depends, Request
+import os
+import jwt
+
+from fastapi import HTTPException, Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+
+from database import read_collection
+
+
+JWT_SECRET = os.environ.get("JWT_SECRET", "apexora-secret")
+JWT_ALGORITHM = "HS256"
+
+security = HTTPBearer()
+
+
+def get_jwt_secret() -> str:
+    return JWT_SECRET
+
+
 async def get_current_user(
     credentials: HTTPAuthorizationCredentials = Depends(security)
 ) -> dict:
