@@ -171,3 +171,113 @@ def delete_collection_item(name, item_id):
     save_all(name, data)
 
     return {"success": True}
+    # ======================================================
+# SERVICES
+# ======================================================
+
+@api.get("/services")
+async def list_services():
+
+    return list_collection("services")
+
+
+@api.get("/services/{item_id}")
+async def get_service(item_id: str):
+
+    item = get_by_id("services", item_id)
+
+    if not item:
+        raise HTTPException(status_code=404, detail="Service not found")
+
+    return item
+
+
+@api.post("/admin/services")
+async def create_service(
+    payload: dict,
+    user=Depends(get_current_user),
+):
+
+    return create_collection_item(
+        "services",
+        payload,
+    )
+
+
+@api.put("/admin/services/{item_id}")
+async def update_service(
+    item_id: str,
+    payload: dict,
+    user=Depends(get_current_user),
+):
+
+    return update_collection_item(
+        "services",
+        item_id,
+        payload,
+    )
+
+
+@api.delete("/admin/services/{item_id}")
+async def delete_service(
+    item_id: str,
+    user=Depends(get_current_user),
+):
+
+    return delete_collection_item(
+        "services",
+        item_id,
+    )
+    # ======================================================
+# PORTFOLIO
+# ======================================================
+
+@api.get("/portfolio")
+async def list_portfolio():
+    return list_collection("portfolio")
+
+
+@api.get("/portfolio/{item_id}")
+async def get_portfolio(item_id: str):
+
+    item = get_by_id("portfolio", item_id)
+
+    if not item:
+        raise HTTPException(status_code=404, detail="Portfolio item not found")
+
+    return item
+
+
+@api.post("/admin/portfolio")
+async def create_portfolio(
+    payload: dict,
+    user=Depends(get_current_user),
+):
+    return create_collection_item(
+        "portfolio",
+        payload,
+    )
+
+
+@api.put("/admin/portfolio/{item_id}")
+async def update_portfolio(
+    item_id: str,
+    payload: dict,
+    user=Depends(get_current_user),
+):
+    return update_collection_item(
+        "portfolio",
+        item_id,
+        payload,
+    )
+
+
+@api.delete("/admin/portfolio/{item_id}")
+async def delete_portfolio(
+    item_id: str,
+    user=Depends(get_current_user),
+):
+    return delete_collection_item(
+        "portfolio",
+        item_id,
+    )
