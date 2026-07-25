@@ -80,10 +80,14 @@ async def get_current_user(
                 detail="Invalid token type"
             )
 
-        user = await db.users.find_one(
-            {"id": payload["sub"]},
-            {"_id": 0}
-        )
+       users = read_collection("users")
+
+user = None
+
+for u in users:
+    if u["id"] == payload["sub"]:
+        user = u
+        break
 
         if not user:
             raise HTTPException(
