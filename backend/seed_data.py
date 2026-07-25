@@ -319,6 +319,8 @@ SEO_PAGES = {
     "/case-studies": {"meta_title": "Case Studies — Apexora Studio", "meta_description": "In-depth stories of measurable results from Apexora Studio."},
     "/blog": {"meta_title": "Journal — Apexora Studio", "meta_description": "Essays on premium web design, performance and conversion."},
     "/contact": {"meta_title": "Contact — Apexora Studio", "meta_description": "Start a project or request a free website audit from Apexora Studio."},
+    "/privacy": {"meta_title": "Privacy Policy — Apexora Studio", "meta_description": "How Apexora Studio collects, uses and protects your personal information."},
+    "/terms": {"meta_title": "Terms & Conditions — Apexora Studio", "meta_description": "The terms governing your use of the Apexora Studio website."},
 }
 
 
@@ -400,6 +402,6 @@ async def seed_all():
     if await db.faqs.count_documents({}) == 0:
         for f in FAQS:
             await db.faqs.insert_one({"id": str(uuid.uuid4()), **f, "created_at": _now()})
-    if await db.seo.count_documents({}) == 0:
-        for path, val in SEO_PAGES.items():
+    for path, val in SEO_PAGES.items():
+        if not await db.seo.find_one({"path": path}):
             await db.seo.insert_one({"id": str(uuid.uuid4()), "path": path, **val, "og_image": "", "canonical": "", "robots": "index,follow", "updated_at": _now()})

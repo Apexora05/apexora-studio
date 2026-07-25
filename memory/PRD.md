@@ -19,7 +19,11 @@ FastAPI + React + MongoDB. Auth: JWT email/password (roles admin/editor). Media:
 - Backend: idempotent admin + content seeding (realistic content, no lorem), brute-force lockout (email-keyed, X-Forwarded-For aware), enquiry rate limiting, public media serving with cache headers.
 
 ## Verified
-Testing agent iteration_1: backend 34/34 (after brute-force fix), frontend 100% of flows. Screenshots confirm premium hero + admin.
+Testing agent iteration_1: backend 34/34 (after brute-force fix), frontend 100%.
+Testing agent iteration_2: backend 47/47, frontend 100% — all marketing page intros (Services/Portfolio/Case Studies/Blog/Contact/Privacy/Terms) now CMS-editable via /admin/pages/:id; edit→live verified. SEO seeded for all public paths incl. /privacy and /terms.
+
+## Full editability (nothing hardcoded)
+Every marketing page is DB-driven: Home & About (deep-path editors), Services/Portfolio/Case Studies/Blog/Contact/Privacy/Terms page intros + Services CTA + legal sections (page editors), plus collections (Services, Portfolio, Case Studies, Blog, Testimonials, FAQs), Navigation, Footer, Logo, Favicon, Contact details, Social links, SEO metadata (per path), and Media — all editable from /admin.
 
 ## Credentials
 admin@apexora.studio / Apexora@2025 (see /app/memory/test_credentials.md)
