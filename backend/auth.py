@@ -5,12 +5,14 @@ import jwt
 
 from datetime import datetime, timedelta, timezone
 from fastapi import APIRouter, HTTPException, Depends, Request
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from pydantic import BaseModel, EmailStr
 
 from database import db, read_collection, write_collection
 
 JWT_SECRET = os.environ.get("JWT_SECRET", "apexora-secret")
 JWT_ALGORITHM = "HS256"
+security = HTTPBearer()
 
 auth_router = APIRouter(prefix="/api/auth", tags=["auth"])
 
@@ -56,7 +58,51 @@ class LoginBody(BaseModel):
     password: str
 
 
-async def get_current_user(request: Request):
+async def get_current_user(
+    credentials: HTTPAuthorizationCredentials = Depends(security)
+) -> dict:
+
+    token = credentials.credentials
+
+    try:
+        payload = jwt.decode(
+            token,
+            get_jwt_secret(),
+            algorithms=[JWT_ALGORITHM]
+        )
+
+        if payload.get("type") != "access":
+            raise HTTPException(
+                status_code=401,
+                detail="Invalid token type"
+            )
+
+        user = await db.users.find_one(
+            {"id": payload["sub"]},
+            {"_id": 0}
+        )
+
+        if not user:
+            raise HTTPException(
+                status_code=401,
+                detail="User not found"
+            )
+
+        user.pop("password_hash", None)
+
+        return user
+
+    except jwt.ExpiredSignatureError:
+        raise HTTPException(
+            status_code=401,
+            detail="Session expired"
+        )
+
+    except jwt.InvalidTokenError:
+        raise HTTPException(
+            status_code=401,
+            detail="Invalid token"
+        )
 
     auth = request.headers.get("Authorization", "")
 
