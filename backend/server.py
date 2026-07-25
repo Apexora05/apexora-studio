@@ -14,7 +14,6 @@ from database import create_indexes
 from auth import auth_router, seed_admin
 from routes_content import api as content_router
 from seed_data import seed_all
-from storage import init_storage
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(name)s - %(levelname)s - %(message)s")
 logger = logging.getLogger(__name__)
@@ -52,8 +51,3 @@ async def on_startup():
         await seed_all()
     except Exception as e:
         logger.error(f"Content seed issue: {e}")
-    try:
-        init_storage()
-        logger.info("Object storage initialized")
-    except Exception as e:
-        logger.error(f"Storage init failed: {e}")
