@@ -40,6 +40,7 @@ def create_token(user):
             "email": user["email"],
             "role": user["role"],
             "exp": datetime.now(timezone.utc) + timedelta(hours=12),
+            "type": "access",
         },
         JWT_SECRET,
         algorithm=JWT_ALGORITHM,
