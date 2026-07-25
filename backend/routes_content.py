@@ -2,7 +2,13 @@ import uuid
 from pathlib import Path
 from datetime import datetime, timezone
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import (
+    APIRouter,
+    Depends,
+    HTTPException,
+    UploadFile,
+    File,
+)
 
 from database import read_collection, write_collection
 from auth import get_current_user, require_admin
