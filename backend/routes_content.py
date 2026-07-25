@@ -1,3 +1,5 @@
+from pydantic import BaseModel
+from typing import Optional
 import uuid
 from pathlib import Path
 from datetime import datetime, timezone
@@ -14,6 +16,11 @@ from database import read_collection, write_collection
 from auth import get_current_user, require_admin
 
 api = APIRouter(prefix="/api", tags=["content"])
+class ServiceCreate(BaseModel):
+    title: str
+    description: str
+    image: Optional[str] = ""
+    slug: Optional[str] = ""
 
 UPLOAD_DIR = Path("uploads")
 UPLOAD_DIR.mkdir(exist_ok=True)
@@ -200,13 +207,13 @@ async def get_service(item_id: str):
 
 @api.post("/admin/services")
 async def create_service(
-    payload: dict,
+    payload: ServiceCreate,
     user=Depends(get_current_user),
 ):
 
     return create_collection_item(
         "services",
-        payload,
+        payload.model_dump(),
     )
 
 
