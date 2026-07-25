@@ -109,11 +109,18 @@ class ChangePwBody(BaseModel):
 
 
 # ---------- endpoints ----------
+def get_client_ip(request: Request) -> str:
+    xff = request.headers.get("x-forwarded-for")
+    if xff:
+        return xff.split(",")[0].strip()
+    return request.client.host if request.client else "unknown"
+
+
 @auth_router.post("/login")
 async def login(body: LoginBody, request: Request):
     email = body.email.lower().strip()
-    ip = request.client.host if request.client else "unknown"
-    identifier = f"{ip}:{email}"
+    # Lock by account (email) — reliable behind reverse proxy / k8s ingress
+    identifier = f"account:{email}"
 
     attempt = await db.login_attempts.find_one({"identifier": identifier})
     if attempt and attempt.get("count", 0) >= MAX_ATTEMPTS:

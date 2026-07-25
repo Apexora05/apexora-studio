@@ -11,7 +11,7 @@ from fastapi.responses import Response, StreamingResponse
 from pydantic import BaseModel, EmailStr, field_validator
 
 from database import db
-from auth import get_current_user, require_admin, hash_password, public_user
+from auth import get_current_user, require_admin, hash_password, public_user, get_client_ip
 from storage import put_object, get_object, guess_content_type, APP_NAME
 from emailer import send_enquiry_notification
 
@@ -201,7 +201,7 @@ async def create_enquiry(body: EnquiryBody, request: Request):
     # Honeypot spam trap
     if body.honeypot:
         return {"success": True}
-    ip = request.client.host if request.client else "unknown"
+    ip = get_client_ip(request)
     # Rate limit: max 5 submissions per IP per hour
     since = (datetime.now(timezone.utc) - timedelta(hours=1)).isoformat()
     recent = await db.enquiries.count_documents({"ip": ip, "created_at": {"$gte": since}})

@@ -20,13 +20,17 @@ export default function ProjectCard({ project, index = 0 }) {
     >
       <Link to={`/portfolio/${project.slug}`} className="block">
         <div className="relative aspect-[4/3] overflow-hidden rounded-sm bg-secondary">
-          <motion.img
-            src={resolveMedia(project.cover)}
-            alt={project.title}
-            loading="lazy"
-            style={{ y }}
-            className="h-[116%] w-full scale-105 object-cover transition-[filter,transform] duration-700 group-hover:scale-110"
-          />
+          {project.cover ? (
+            <motion.img
+              src={resolveMedia(project.cover)}
+              alt={project.title}
+              loading="lazy"
+              style={{ y }}
+              className="h-[116%] w-full scale-105 object-cover transition-[filter,transform] duration-700 group-hover:scale-110"
+            />
+          ) : (
+            <div className="grid h-full w-full place-items-center text-muted-foreground">{project.title}</div>
+          )}
           <div className="absolute inset-0 bg-black/0 transition-colors duration-500 group-hover:bg-black/10" />
           <span className="absolute left-4 top-4 rounded-full bg-background/85 px-3 py-1 text-xs tracking-tight text-foreground backdrop-blur">
             {project.industry}
