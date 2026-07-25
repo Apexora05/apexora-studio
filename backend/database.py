@@ -1,16 +1,33 @@
+import json
 import os
-from motor.motor_asyncio import AsyncIOMotorClient
+from pathlib import Path
 
-mongo_url = os.environ["MONGO_URL"]
-client = AsyncIOMotorClient(mongo_url)
-db = client[os.environ["DB_NAME"]]
+DATA_DIR = Path("data")
+DATA_DIR.mkdir(exist_ok=True)
+
+
+def get_collection(name):
+    file_path = DATA_DIR / f"{name}.json"
+
+    if not file_path.exists():
+        file_path.write_text("[]", encoding="utf-8")
+
+    return file_path
+
+
+def read_collection(name):
+    file_path = get_collection(name)
+
+    with open(file_path, "r", encoding="utf-8") as f:
+        return json.load(f)
+
+
+def write_collection(name, data):
+    file_path = get_collection(name)
+
+    with open(file_path, "w", encoding="utf-8") as f:
+        json.dump(data, f, indent=4)
 
 
 async def create_indexes():
-    await db.users.create_index("email", unique=True)
-    await db.password_reset_tokens.create_index("expires_at", expireAfterSeconds=0)
-    await db.login_attempts.create_index("identifier")
-    await db.portfolio.create_index("slug", unique=True)
-    await db.case_studies.create_index("slug", unique=True)
-    await db.posts.create_index("slug", unique=True)
-    await db.services.create_index("slug", unique=True)
+    return
