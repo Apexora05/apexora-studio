@@ -13,6 +13,8 @@ from database import db, read_collection, write_collection
 JWT_SECRET = os.environ.get("JWT_SECRET", "apexora-secret")
 JWT_ALGORITHM = "HS256"
 security = HTTPBearer()
+def get_jwt_secret() -> str:
+    return os.environ["JWT_SECRET"]
 
 auth_router = APIRouter(prefix="/api/auth", tags=["auth"])
 
