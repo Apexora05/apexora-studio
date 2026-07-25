@@ -65,6 +65,66 @@ const SCHEMAS = {
     { section: "Team", fields: [ { path: "team", label: "Team", type: "objectlist", subfields: [ { key: "name", label: "Name" }, { key: "role", label: "Role" }, { key: "image", label: "Photo", type: "image" } ] } ] },
     { section: "SEO", fields: [ { path: "seo.meta_title", label: "Meta title" }, { path: "seo.meta_description", label: "Meta description", type: "textarea" } ] },
   ],
+  services: [
+    { section: "Hero", fields: [
+      { path: "hero.eyebrow", label: "Eyebrow" },
+      { path: "hero.title", label: "Title", type: "textarea" },
+      { path: "hero.subtext", label: "Subtext", type: "textarea" },
+    ]},
+    { section: "Bottom CTA", fields: [
+      { path: "cta.eyebrow", label: "Eyebrow" },
+      { path: "cta.title", label: "Title" },
+      { path: "cta.text", label: "Text", type: "textarea" },
+      { path: "cta.button.label", label: "Button label" },
+      { path: "cta.button.path", label: "Button link" },
+    ]},
+  ],
+  portfolio: [
+    { section: "Hero", fields: [
+      { path: "hero.eyebrow", label: "Eyebrow" },
+      { path: "hero.title", label: "Title", type: "textarea" },
+      { path: "hero.subtext", label: "Subtext (optional)", type: "textarea" },
+    ]},
+  ],
+  "case-studies": [
+    { section: "Hero", fields: [
+      { path: "hero.eyebrow", label: "Eyebrow" },
+      { path: "hero.title", label: "Title", type: "textarea" },
+      { path: "hero.subtext", label: "Subtext", type: "textarea" },
+    ]},
+  ],
+  blog: [
+    { section: "Hero", fields: [
+      { path: "hero.eyebrow", label: "Eyebrow" },
+      { path: "hero.title", label: "Title", type: "textarea" },
+      { path: "hero.subtext", label: "Subtext (optional)", type: "textarea" },
+    ]},
+  ],
+  contact: [
+    { section: "Hero", fields: [
+      { path: "hero.eyebrow", label: "Eyebrow" },
+      { path: "hero.title", label: "Title", type: "textarea" },
+      { path: "hero.subtext", label: "Subtext", type: "textarea" },
+    ]},
+  ],
+  privacy: [
+    { section: "Hero", fields: [
+      { path: "hero.eyebrow", label: "Eyebrow" },
+      { path: "hero.title", label: "Title" },
+    ]},
+    { section: "Sections", fields: [
+      { path: "sections", label: "Policy sections", type: "objectlist", subfields: [ { key: "h", label: "Heading" }, { key: "p", label: "Body", type: "textarea" } ] },
+    ]},
+  ],
+  terms: [
+    { section: "Hero", fields: [
+      { path: "hero.eyebrow", label: "Eyebrow" },
+      { path: "hero.title", label: "Title" },
+    ]},
+    { section: "Sections", fields: [
+      { path: "sections", label: "Terms sections", type: "objectlist", subfields: [ { key: "h", label: "Heading" }, { key: "p", label: "Body", type: "textarea" } ] },
+    ]},
+  ],
 };
 
 export default function PageEditor() {
@@ -73,6 +133,8 @@ export default function PageEditor() {
   const [doc, setDoc] = useState(null);
   const [saving, setSaving] = useState(false);
   const schema = SCHEMAS[pageId] || [];
+
+  const TITLES = { home: "Homepage", about: "About", services: "Services Page", portfolio: "Portfolio Page", "case-studies": "Case Studies Page", blog: "Blog Page", contact: "Contact Page", privacy: "Privacy Policy", terms: "Terms & Conditions" };
 
   useEffect(() => { if (data) setDoc(data); }, [data]);
 
@@ -138,7 +200,7 @@ export default function PageEditor() {
   return (
     <div data-testid={`page-editor-${pageId}`}>
       <PageHeader
-        title={`${pageId === "home" ? "Homepage" : "About"} Content`}
+        title={`${TITLES[pageId] || pageId} Content`}
         description="Edit every section. Saved changes appear on the live site instantly."
         action={<button onClick={save} disabled={saving} className="rounded-full bg-foreground px-6 py-2.5 text-sm font-medium text-background disabled:opacity-60" data-testid="page-save">{saving ? "Saving…" : "Save changes"}</button>}
       />

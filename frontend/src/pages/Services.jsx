@@ -15,19 +15,23 @@ function Icon({ name, className }) {
 
 export default function Services() {
   const { data: services } = useGet("/services");
+  const { data: page } = useGet("/pages/services");
+  const { data: seo } = useGet("/seo-by-path?path=/services");
+  const hero = page?.hero || {};
+  const cta = page?.cta || {};
 
   return (
     <div data-testid="services-page">
-      <Seo title="Services — Apexora Studio" description="Website design, redesign, e-commerce, UI/UX and SEO development from a premium studio." path="/services" />
+      <Seo title={seo?.meta_title || "Services — Apexora Studio"} description={seo?.meta_description || "Website design, redesign, e-commerce, UI/UX and SEO development from a premium studio."} image={seo?.og_image} path="/services" />
 
       <section className="px-5 pt-36 sm:px-8 md:pt-44">
         <div className="mx-auto max-w-7xl">
-          <Eyebrow>Services</Eyebrow>
+          <Eyebrow>{hero.eyebrow || "Services"}</Eyebrow>
           <h1 className="mt-8 max-w-4xl font-display text-5xl font-semibold leading-[0.95] tracking-tight sm:text-6xl md:text-7xl">
-            Design and build, end to end.
+            {hero.title || "Design and build, end to end."}
           </h1>
           <p className="mt-8 max-w-2xl text-lg text-muted-foreground md:text-xl">
-            A focused set of services covering every stage of your website — from first concept to continuous optimization.
+            {hero.subtext || "A focused set of services covering every stage of your website — from first concept to continuous optimization."}
           </p>
         </div>
       </section>
@@ -56,10 +60,10 @@ export default function Services() {
 
       <section className="px-5 pb-28 sm:px-8 md:pb-36">
         <div className="mx-auto max-w-7xl rounded-sm border border-border bg-secondary/40 p-10 text-center md:p-16">
-          <SectionHeading align="center" eyebrow="Not sure where to start?" title="Get a free website audit." className="mx-auto" />
-          <p className="mx-auto mt-5 max-w-xl text-muted-foreground">We'll review your current site and show you exactly where you're losing trust and revenue — no obligation.</p>
+          <SectionHeading align="center" eyebrow={cta.eyebrow || "Not sure where to start?"} title={cta.title || "Get a free website audit."} className="mx-auto" />
+          <p className="mx-auto mt-5 max-w-xl text-muted-foreground">{cta.text || "We'll review your current site and show you exactly where you're losing trust and revenue — no obligation."}</p>
           <div className="mt-8 flex justify-center">
-            <BtnLink to="/contact" variant="accent" dataTestid="services-cta">Request Free Website Audit</BtnLink>
+            <BtnLink to={cta.button?.path || "/contact"} variant="accent" dataTestid="services-cta">{cta.button?.label || "Request Free Website Audit"}</BtnLink>
           </div>
         </div>
       </section>

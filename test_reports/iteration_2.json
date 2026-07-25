@@ -1,0 +1,40 @@
+{
+  "summary": "Iteration 2 focused on new CMS-editable page-intro documents for Services/Portfolio/Case Studies/Blog/Contact/Privacy/Terms. Backend: 47/47 pytest tests pass (added 15 new tests for /api/pages/{marketing} and /api/seo-by-path). Frontend: Admin sidebar has all 9 Pages nav testids (admin-nav-homepage/about/services-page/portfolio-page/case-studies-page/blog-page/contact-page/privacy-policy/terms). End-to-end edit->live verified for Services: changed hero.title to 'AUTOMATED TEST HEADLINE' via /admin/pages/services + Save, saw it on public /services H1, then restored to 'Design and build, end to end.'. Privacy editor renders Hero + Sections objectlist with all 7 seeded sections (Heading + Body inputs). Contact editor loads eyebrow='Contact', title=\"Let's start something exceptional.\", subtext preloaded. All public pages regress OK (200) with correct H1s including /privacy, /terms, and /does-not-exist -> 404 page.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "/api/seo-by-path?path=/privacy and /terms", "issue": "Returns empty {} — no seo doc seeded for /privacy or /terms. Other public paths (/services, /portfolio, /case-studies, /blog, /contact) return full seo. Consider seeding privacy/terms seo as well."},
+      {"endpoint": "/api/auth/login", "issue": "(carried over from iter 1, NOT fixed) Brute-force lockout still bypassed behind k8s ingress — request.client.host rotates. Fix with X-Forwarded-For."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [
+    "(Optional) Seed SEO docs for /privacy and /terms so /api/seo-by-path returns full meta_title/meta_description for the legal pages.",
+    "(Testability, non-blocking) PageEditor objectlist sub-fields lack individual data-testids. Row remove uses page-<path>-remove-<i> and add uses page-<path>-add, but the Heading/Body inputs inside each row have no testid. Adding data-testid like page-sections.<i>.h / page-sections.<i>.p would help future automated tests target specific section rows.",
+    "(Carried over) Fix brute-force lockout IP detection using X-Forwarded-For."
+  ],
+  "critical_code_review_comments": [
+    "routes_content.py::update_page still uses get_current_user (any authenticated) rather than require_admin. Editors can edit legal pages (privacy/terms) — verify this matches product intent for the new pages.",
+    "PageEditor.jsx objectlist implementation: subfield inputs (used for privacy/terms sections) lack data-testid, which makes granular UI tests harder. Row-add/row-remove are testable, but section content assertions cannot target by index.",
+    "seed_data.py: SEO docs seeded for /services, /portfolio, /case-studies, /blog, /contact but not for /privacy, /terms. Legal pages will render with fallback SEO meta only.",
+    "Overall newly-added pages architecture is clean: single /api/pages/{id} route handles all 9 pages via flexible JSON payload; SCHEMAS in PageEditor drives editor UI declaratively."
+  ],
+  "updated_files": [
+    "/app/backend/tests/backend_test.py (added marketing page-intro tests, seo-by-path tests, services page hero update+revert test)"
+  ],
+  "success_rate": {"backend": "100% (47/47 pytest)", "frontend": "100% of tested flows"},
+  "test_credentials": "admin@apexora.studio / Apexora@2025 — verified working",
+  "seed_data_creation": "None retained. Services hero title was temporarily changed for edit->live verification and restored to 'Design and build, end to end.' via admin API before finishing.",
+  "retest_needed": false,
+  "should_main_agent_self_test": true,
+  "context_for_next_testing_agent": "backend_test.py now covers all 7 marketing page docs + 5 seo-by-path entries (/services,/portfolio,/case-studies,/blog,/contact). Privacy/Terms seo intentionally excluded from tests since not seeded — flip to required if main agent seeds them. PageEditor testids: top-level fields use page-<dotpath> (e.g. page-hero.title, page-cta.button.label). Objectlist subfields (sections.<i>.h/p) currently have no testid; use page-sections-add / page-sections-remove-<i> for row ops. Save button: page-save. Admin nav: admin-nav-<slug(label)> with dashes; all 9 confirmed present.",
+  "rca of the issue": "No new critical issues found this iteration. Only carry-over bug from iter 1 (brute-force IP detection) remains."
+}

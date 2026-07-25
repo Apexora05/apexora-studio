@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/select";
 import { api, formatApiErrorDetail } from "@/lib/api";
 import { useSite } from "@/context/SiteContext";
+import { useGet } from "@/hooks/useApi";
 import Seo from "@/components/site/Seo";
 import { Eyebrow } from "@/components/site/ui";
 
@@ -27,6 +28,9 @@ const inputCls =
 
 export default function Contact() {
   const { settings } = useSite();
+  const { data: page } = useGet("/pages/contact");
+  const { data: seo } = useGet("/seo-by-path?path=/contact");
+  const hero = page?.hero || {};
   const [form, setForm] = useState({ name: "", email: "", company: "", website: "", phone: "", budget: "", message: "", honeypot: "" });
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
@@ -53,16 +57,16 @@ export default function Contact() {
 
   return (
     <div data-testid="contact-page">
-      <Seo title="Contact — Apexora Studio" description="Start a project or request a free website audit from Apexora Studio." path="/contact" />
+      <Seo title={seo?.meta_title || "Contact — Apexora Studio"} description={seo?.meta_description || "Start a project or request a free website audit from Apexora Studio."} image={seo?.og_image} path="/contact" />
 
       <section className="px-5 pt-36 sm:px-8 md:pt-44">
         <div className="mx-auto max-w-7xl">
-          <Eyebrow>Contact</Eyebrow>
+          <Eyebrow>{hero.eyebrow || "Contact"}</Eyebrow>
           <h1 className="mt-8 max-w-4xl font-display text-5xl font-semibold leading-[0.95] tracking-tight sm:text-6xl md:text-7xl">
-            Let's start something exceptional.
+            {hero.title || "Let's start something exceptional."}
           </h1>
           <p className="mt-8 max-w-2xl text-lg text-muted-foreground md:text-xl">
-            Tell us about your project. We reply to every enquiry within one business day.
+            {hero.subtext || "Tell us about your project. We reply to every enquiry within one business day."}
           </p>
         </div>
       </section>

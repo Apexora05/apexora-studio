@@ -377,3 +377,46 @@ def test_stats(s, admin_headers):
     d = r.json()
     for k in ["portfolio", "case_studies", "posts", "services", "testimonials", "faqs", "enquiries", "users"]:
         assert k in d
+
+
+# --------------------------- NEW: Page-intro docs for marketing pages ---------------------------
+@pytest.mark.parametrize("pid", ["services", "portfolio", "case-studies", "blog", "contact", "privacy", "terms"])
+def test_marketing_page_has_hero(s, pid):
+    r = s.get(f"{API}/pages/{pid}")
+    assert r.status_code == 200, f"{pid}: {r.status_code} {r.text}"
+    doc = r.json()
+    assert doc.get("id") == pid
+    hero = doc.get("hero")
+    assert isinstance(hero, dict) and hero, f"{pid} missing hero object"
+    assert hero.get("title"), f"{pid} hero.title empty"
+    if pid in ("privacy", "terms"):
+        sections = doc.get("sections")
+        assert isinstance(sections, list) and len(sections) > 0, f"{pid} sections empty"
+        assert sections[0].get("h") and sections[0].get("p")
+    if pid == "services":
+        cta = doc.get("cta")
+        assert isinstance(cta, dict) and cta.get("title")
+
+
+@pytest.mark.parametrize("path", ["/services", "/portfolio", "/case-studies", "/blog", "/contact"])
+def test_seo_by_path(s, path):
+    r = s.get(f"{API}/seo-by-path", params={"path": path})
+    assert r.status_code == 200
+    doc = r.json()
+    assert doc, f"empty seo for {path}"
+    assert doc.get("meta_title"), f"meta_title missing for {path}"
+
+
+def test_update_services_page_hero_and_revert(s, admin_headers):
+    original = s.get(f"{API}/pages/services").json()
+    original.pop("_id", None)
+    new_title = f"TEST_HERO_{uuid.uuid4().hex[:6]}"
+    payload = dict(original)
+    payload["hero"] = {**(original.get("hero") or {}), "title": new_title}
+    r = s.put(f"{API}/pages/services", json=payload, headers=admin_headers)
+    assert r.status_code == 200
+    assert r.json()["hero"]["title"] == new_title
+    # revert
+    rr = s.put(f"{API}/pages/services", json=original, headers=admin_headers)
+    assert rr.status_code == 200
+    assert rr.json()["hero"]["title"] == original["hero"]["title"]

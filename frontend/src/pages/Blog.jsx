@@ -9,6 +9,9 @@ import { Eyebrow } from "@/components/site/ui";
 
 export default function Blog() {
   const { data: posts } = useGet("/posts");
+  const { data: page } = useGet("/pages/blog");
+  const { data: seo } = useGet("/seo-by-path?path=/blog");
+  const hero = page?.hero || {};
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState("All");
 
@@ -32,13 +35,13 @@ export default function Blog() {
 
   return (
     <div data-testid="blog-page">
-      <Seo title="Journal — Apexora Studio" description="Essays on premium web design, performance and conversion." path="/blog" />
+      <Seo title={seo?.meta_title || "Journal — Apexora Studio"} description={seo?.meta_description || "Essays on premium web design, performance and conversion."} image={seo?.og_image} path="/blog" />
 
       <section className="px-5 pt-36 sm:px-8 md:pt-44">
         <div className="mx-auto max-w-7xl">
-          <Eyebrow>The Journal</Eyebrow>
+          <Eyebrow>{hero.eyebrow || "The Journal"}</Eyebrow>
           <h1 className="mt-8 max-w-4xl font-display text-5xl font-semibold leading-[0.95] tracking-tight sm:text-6xl md:text-7xl">
-            Ideas on design that performs.
+            {hero.title || "Ideas on design that performs."}
           </h1>
 
           <div className="mt-10 flex flex-col gap-4 md:flex-row md:items-center md:justify-between">

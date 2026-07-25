@@ -6,7 +6,10 @@ import ProjectCard from "@/components/site/ProjectCard";
 
 export default function Portfolio() {
   const { data: projects } = useGet("/portfolio");
+  const { data: page } = useGet("/pages/portfolio");
+  const { data: seo } = useGet("/seo-by-path?path=/portfolio");
   const [filter, setFilter] = useState("All");
+  const hero = page?.hero || {};
 
   const categories = useMemo(() => {
     const set = new Set(["All"]);
@@ -18,14 +21,15 @@ export default function Portfolio() {
 
   return (
     <div data-testid="portfolio-page">
-      <Seo title="Work — Apexora Studio" description="Selected premium website projects by Apexora Studio." path="/portfolio" />
+      <Seo title={seo?.meta_title || "Work — Apexora Studio"} description={seo?.meta_description || "Selected premium website projects by Apexora Studio."} image={seo?.og_image} path="/portfolio" />
 
       <section className="px-5 pt-36 sm:px-8 md:pt-44">
         <div className="mx-auto max-w-7xl">
-          <Eyebrow>Selected Work</Eyebrow>
+          <Eyebrow>{hero.eyebrow || "Selected Work"}</Eyebrow>
           <h1 className="mt-8 max-w-4xl font-display text-5xl font-semibold leading-[0.95] tracking-tight sm:text-6xl md:text-7xl">
-            Work that earns attention.
+            {hero.title || "Work that earns attention."}
           </h1>
+          {hero.subtext ? <p className="mt-8 max-w-2xl text-lg text-muted-foreground md:text-xl">{hero.subtext}</p> : null}
           <div className="mt-10 flex flex-wrap gap-2">
             {categories.map((c) => (
               <button

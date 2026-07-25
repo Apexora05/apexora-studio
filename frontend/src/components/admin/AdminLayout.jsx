@@ -15,6 +15,13 @@ const groups = [
   { title: "Pages", items: [
     { to: "/admin/pages/home", label: "Homepage", icon: Home },
     { to: "/admin/pages/about", label: "About", icon: Info },
+    { to: "/admin/pages/services", label: "Services Page", icon: Briefcase },
+    { to: "/admin/pages/portfolio", label: "Portfolio Page", icon: FolderKanban },
+    { to: "/admin/pages/case-studies", label: "Case Studies Page", icon: FileText },
+    { to: "/admin/pages/blog", label: "Blog Page", icon: FileText },
+    { to: "/admin/pages/contact", label: "Contact Page", icon: Info },
+    { to: "/admin/pages/privacy", label: "Privacy Policy", icon: FileText },
+    { to: "/admin/pages/terms", label: "Terms", icon: FileText },
   ]},
   { title: "Content", items: [
     { to: "/admin/services", label: "Services", icon: Briefcase },

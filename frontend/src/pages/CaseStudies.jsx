@@ -8,19 +8,22 @@ import { Eyebrow } from "@/components/site/ui";
 
 export default function CaseStudies() {
   const { data: items } = useGet("/case-studies");
+  const { data: page } = useGet("/pages/case-studies");
+  const { data: seo } = useGet("/seo-by-path?path=/case-studies");
+  const hero = page?.hero || {};
 
   return (
     <div data-testid="case-studies-page">
-      <Seo title="Case Studies — Apexora Studio" description="In-depth stories of measurable results from Apexora Studio." path="/case-studies" />
+      <Seo title={seo?.meta_title || "Case Studies — Apexora Studio"} description={seo?.meta_description || "In-depth stories of measurable results from Apexora Studio."} image={seo?.og_image} path="/case-studies" />
 
       <section className="px-5 pt-36 sm:px-8 md:pt-44">
         <div className="mx-auto max-w-7xl">
-          <Eyebrow>Case Studies</Eyebrow>
+          <Eyebrow>{hero.eyebrow || "Case Studies"}</Eyebrow>
           <h1 className="mt-8 max-w-4xl font-display text-5xl font-semibold leading-[0.95] tracking-tight sm:text-6xl md:text-7xl">
-            Proof, not promises.
+            {hero.title || "Proof, not promises."}
           </h1>
           <p className="mt-8 max-w-2xl text-lg text-muted-foreground md:text-xl">
-            A closer look at how strategy, design and engineering combine to move real business metrics.
+            {hero.subtext || "A closer look at how strategy, design and engineering combine to move real business metrics."}
           </p>
         </div>
       </section>
