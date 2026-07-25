@@ -260,3 +260,15 @@ async def seed_admin():
         "users",
         users
     )
+@auth_router.get("/debug/users")
+async def debug_users():
+    users = read_collection("users")
+
+    return [
+        {
+            "id": u.get("id"),
+            "email": u.get("email"),
+            "role": u.get("role")
+        }
+        for u in users
+    ]
