@@ -1,0 +1,127 @@
+{
+  "art_direction_mandate": "Awwwards Site-of-the-Day level. Hybrid of Apple/Linear technical precision and Aesop editorial luxury. The design balances massive whitespace, severe typography, and organic kinetic motion. Core features include a masked line-by-line reveal in the hero, spotlight/clipped image treatments for portfolio cases, numbered manifesto chapters, and an editorial marquee.",
+  "theme_strategy": {
+    "default": "light",
+    "support": "Light and Dark modes toggled via navigation and stored in localStorage. Seamless transition without reload.",
+    "colors": {
+      "light": {
+        "background": "#FFFFFF",
+        "primary_text": "#111111",
+        "secondary_text": "#6B7280",
+        "border": "#E5E7EB",
+        "accent": "#2563EB",
+        "surface": "#F9FAFB",
+        "glass": "rgba(255, 255, 255, 0.7)",
+        "glass_border": "rgba(0, 0, 0, 0.05)"
+      },
+      "dark": {
+        "background": "#0A0A0A",
+        "primary_text": "#F9FAFB",
+        "secondary_text": "#9CA3AF",
+        "border": "#1F2937",
+        "accent": "#3B82F6",
+        "surface": "#111111",
+        "glass": "rgba(10, 10, 10, 0.6)",
+        "glass_border": "rgba(255, 255, 255, 0.05)"
+      }
+    }
+  },
+  "typography": {
+    "strategy": "Editorial Future (Wide Display Sans + Geometric Body) mixed with luxury serif accents.",
+    "fonts": {
+      "headings": "Cabinet Grotesk or Clash Display (sans-serif) for primary impact. Alternative: Playfair Display for luxury sections.",
+      "body": "Outfit or Manrope (sans-serif) for strict geometric legibility.",
+      "accents": "Cormorant Garamond (italic serif) for quote marks, ampersands, or specific accent words in headings."
+    },
+    "scales": {
+      "h1": "text-5xl sm:text-6xl md:text-7xl lg:text-8xl tracking-tighter leading-[0.9]",
+      "h2": "text-4xl sm:text-5xl md:text-6xl tracking-tight leading-none",
+      "h3": "text-2xl sm:text-3xl tracking-tight",
+      "body_large": "text-lg md:text-xl leading-relaxed",
+      "body_base": "text-base leading-relaxed tracking-normal",
+      "overline": "text-xs uppercase tracking-[0.2em] font-semibold"
+    },
+    "rules": [
+      "NEVER use Inter, Roboto, or Space Grotesk for headings.",
+      "Headings must have tight letter spacing (tracking-tight to tracking-tighter).",
+      "Hierarchy gap rule: H1 and subtitle must have at least 2 Tailwind steps between them."
+    ]
+  },
+  "layouts": {
+    "spacing": "Generous Spacing Philosophy. Use 2-3x more spacing than typical templates (py-24 to py-32 for sections).",
+    "grids": {
+      "marketing_bento": "grid-cols-1 md:grid-cols-8 lg:grid-cols-12 gap-8. Asymmetrical distribution (e.g., col-span-8 for hero images, col-span-4 for text blocks).",
+      "cms_dashboard": "grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-4 or gap-6. Dense, strict hierarchy. Use border-collapse styles for technical look."
+    }
+  },
+  "visual_enhancers": {
+    "surfaces": {
+      "header": "Crystal Glassmorphism: backdrop-blur-xl bg-white/70 (light) or bg-black/60 (dark), 1px delicate inner stroke.",
+      "cards": "Subtle, flat backgrounds with 1px border. On hover, elevate slightly (-translate-y-1) and cast soft ambient shadow.",
+      "images": "Spotlight/clipped frames. Do not round corners fully—use sharp or very slight radii (rounded-sm) for a brutalist/editorial edge."
+    },
+    "textures": "Include subtle noise/grain overlay (opacity 2-3%) across the entire marketing site body to eliminate digital flatness."
+  },
+  "motion": {
+    "libraries": ["framer-motion", "lenis"],
+    "hero_kinetic": "Masked line-by-line reveal. Text wrapped in overflow-hidden spans, animating Y from 100% to 0% with easeOut.",
+    "scroll_reveal": "Elements fade in and translate up (y: 30) when in view via Framer Motion's whileInView.",
+    "parallax": "Subtle image parallax using Framer Motion's useScroll and useTransform for hero and featured portfolio images.",
+    "interactions": "Button hover: pill-shaped, scale up slightly, or background slide. Cards: border color shift and soft lift.",
+    "marquee": "Slow, editorial marquee using react-fast-marquee. Huge outline text or spaced serif text."
+  },
+  "component_strategy": {
+    "marketing_pages": {
+      "structure": "Raw HTML + Tailwind CSS. Avoid pre-built Shadcn layouts for high-impact sections to ensure asymmetry.",
+      "forms": "Use Shadcn Input/Textarea/Select for logic and accessibility, but restyle heavily (e.g., bottom border only, flush background)."
+    },
+    "cms_admin": {
+      "structure": "Strictly Shadcn components. Dense, practical, highly usable.",
+      "components": "Tables, Dialogs, Cards, Forms, Dropdowns, Tabs.",
+      "styling": "Cardless or subtle rounded corners. Use sharp edges."
+    }
+  },
+  "media": {
+    "3d_parallax": "React Spring Parallax or Framer Motion 3D for subtle shifts. No heavy Three.js unless specifically building an interactive object.",
+    "image_urls": {
+      "hero_abstract": [
+        "https://images.pexels.com/photos/33410957/pexels-photo-33410957.jpeg",
+        "https://images.unsplash.com/photo-1481026469463-66327c86e544",
+        "https://images.unsplash.com/photo-1479293581560-aee98bb24f7f"
+      ],
+      "portfolio_mockups": [
+        "https://images.unsplash.com/photo-1634084462412-b54873c0a56d",
+        "https://images.unsplash.com/photo-1642132652860-471b4228023e",
+        "https://images.pexels.com/photos/205316/pexels-photo-205316.png"
+      ],
+      "about_studio": [
+        "https://images.unsplash.com/photo-1627917932033-74123f070958",
+        "https://images.unsplash.com/photo-1742440710226-450e3b85c100",
+        "https://images.pexels.com/photos/6583344/pexels-photo-6583344.jpeg"
+      ]
+    }
+  },
+  "accessibility": {
+    "contrast": "Ensure primary text hits 4.5:1 on background. Validate the accent blue (#2563EB and #3B82F6) against surfaces.",
+    "reduced_motion": "Wrap Framer Motion animations with useReducedMotion checks where necessary.",
+    "testing": "All interactive elements (buttons, nav links, forms, CMS actions) MUST have a data-testid attribute (e.g., data-testid='hero-cta-button')."
+  },
+  "instructions_to_main_agent": [
+    "Step 1: Scaffold standard React app. Configure Tailwind with Light/Dark mode classes and defined color palette.",
+    "Step 2: Install dependencies: framer-motion, lenis (for smooth scroll), react-fast-marquee, lucide-react, and required Shadcn components.",
+    "Step 3: Build the Marketing Layout. Implement Nav (crystal glassmorphism) and Footer (massive space, large branding). Implement theme toggle.",
+    "Step 4: Build Home Page. Execute the Kinetic Hero (line-by-line reveal), Manifesto Chapters, Marquee, Portfolio Grid with Parallax images.",
+    "Step 5: Build subsequent Marketing Pages (About, Services, Portfolio, Case Studies, Blog, Contact). Use the image URLs provided in media.image_urls.",
+    "Step 6: Build the Admin CMS Dashboard. Use a tight sidebar layout, Shadcn tables for data, and simple minimal cards for metrics.",
+    "Step 7: Final Polish. Add subtle grain overlay globally. Ensure all interactive components have focus states and smooth hover micro-animations."
+  ],
+  "universal_guidelines_for_main_agent": [
+    "Do not use transparent backgrounds without a blur or scrim in the header or dropdowns.",
+    "Avoid generic, centered 'AI slop' layouts. Rely on asymmetry and tension in marketing pages.",
+    "Implement layering with robust z-index usage.",
+    "DO NOT use 'transition: all'. Explicitly define transition properties (e.g., 'transition-colors', 'transition-transform').",
+    "DO NOT force text-align: center on the root App container.",
+    "Add 'data-testid' to ALL interactive elements.",
+    "Never use placeholder URLs (like placehold.it). Use the supplied image URLs."
+  ]
+}
