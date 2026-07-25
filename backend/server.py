@@ -10,7 +10,7 @@ import logging
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 
-from database import client, create_indexes
+from database import create_indexes
 from auth import auth_router, seed_admin
 from routes_content import api as content_router
 from seed_data import seed_all
@@ -57,8 +57,3 @@ async def on_startup():
         logger.info("Object storage initialized")
     except Exception as e:
         logger.error(f"Storage init failed: {e}")
-
-
-@app.on_event("shutdown")
-async def shutdown_db_client():
-    client.close()
