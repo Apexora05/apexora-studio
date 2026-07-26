@@ -36,18 +36,6 @@ async def seed_all():
 
     settings = read_collection("settings")
 
-    if not settings:
-
-        write_collection(
-            "settings",
-            [
-                {
-                    "id": "site",
-                    "site_name": "Apexora Studio",
-                    "created_at": now()
-                }
-            ]
-        )
 if not settings:
 
     write_collection(
@@ -60,10 +48,10 @@ if not settings:
             }
         ]
     )
-        pages = read_collection("pages")
+        pages = read_collection("pages")    
 
     if True:
-
+        
         write_collection(
             "pages",
             [
