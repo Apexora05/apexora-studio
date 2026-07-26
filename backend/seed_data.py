@@ -32,8 +32,6 @@ async def seed_all():
             write_collection(collection, [])
 
 
-       # Default homepage settings
-
     settings = read_collection("settings")
 
     if not settings:
@@ -49,8 +47,6 @@ async def seed_all():
             ]
         )
 
-
-    pages = read_collection("pages")
 
     write_collection(
         "pages",
@@ -93,35 +89,3 @@ async def seed_all():
             }
         ]
     )
-                {
-                    "id": "about",
-                    "title": "About",
-                    "content": {},
-                    "created_at": now()
-                },
-                {
-                    "id": "services",
-                    "title": "Services",
-                    "content": {},
-                    "created_at": now()
-                },
-                {
-                    "id": "portfolio",
-                    "title": "Portfolio",
-                    "content": {},
-                    "created_at": now()
-                },
-                {
-                    "id": "blog",
-                    "title": "Blog",
-                    "content": {},
-                    "created_at": now()
-                },
-                {
-                    "id": "contact",
-                    "title": "Contact",
-                    "content": {},
-                    "created_at": now()
-                }
-            ]
-        )
