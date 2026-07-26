@@ -41,7 +41,7 @@ const testimonials = [];
 const posts = [];
 const faqs = [];
 
-  const hero = content.home.hero;
+  const hero = home?.content?.hero || {};
 
   return (
     <div data-testid="home-page">
