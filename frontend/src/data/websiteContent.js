@@ -1,20 +1,13 @@
-export const content = {
-
-home:{
 hero:{
-eyebrow:"WEB DESIGN STUDIO",
+eyebrow:"PREMIUM WEB DESIGN STUDIO",
 
-headline: "TEST CHANGE WORKING",
+headline:"We build websites that make brands impossible to ignore.",
 
-description: "Premium websites designed to build trust, authority, and growth for ambitious brands.",
+description:"Apexora creates premium digital experiences designed to build trust, authority, and growth.",
 
-frontend/public/images/hero.webp
+image:"/images/hero.webp",
 
-button1:"View Portfolio",
+button1:"View Our Work",
 
-button2:"Start Project"
-}
-
-}
-
+button2:"Start Your Project"
 }
