@@ -34,13 +34,12 @@ function HeroImage({ src }) {
   );
 }
 
-export default function Home() {
-  const { data: home } = useGet("/pages/home");
-  const { data: projects } = useGet("/portfolio?featured=1");
-  const { data: services } = useGet("/services");
-  const { data: testimonials } = useGet("/testimonials?featured=1");
-  const { data: posts } = useGet("/posts");
-  const { data: faqs } = useGet("/faqs");
+const home = content.home;
+const projects = [];
+const services = [];
+const testimonials = [];
+const posts = [];
+const faqs = [];
 
   const hero = content.home.hero;
 
