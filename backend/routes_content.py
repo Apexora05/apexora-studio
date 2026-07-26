@@ -11,6 +11,7 @@ from fastapi import (
     UploadFile,
     File,
 )
+from fastapi.responses import FileResponse
 
 from database import read_collection, write_collection
 from auth import get_current_user, require_admin
