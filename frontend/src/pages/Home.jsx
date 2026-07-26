@@ -34,7 +34,7 @@ function HeroImage({ src }) {
   );
 }
 
-const home = content.home;
+const { data: home } = useGet("/pages/home");
 const projects = [];
 const services = [];
 const testimonials = [];
