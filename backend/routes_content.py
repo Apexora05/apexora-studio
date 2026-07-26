@@ -116,15 +116,16 @@ async def update_page(
 
     pages = get_all("pages")
 
-    found = False
+        found = False
 
-   for i, page in enumerate(pages):
+    for i, page in enumerate(pages):
 
-    if page.get("id") == page_id:
-        page["content"] = payload
-        page["id"] = page_id
-        pages[i] = page
-        found = True
+        if page.get("id") == page_id:
+            page["content"] = payload
+            page["id"] = page_id
+            pages[i] = page
+            found = True
+            break
 
             page["id"] = page_id
 
