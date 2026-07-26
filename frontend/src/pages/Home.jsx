@@ -42,7 +42,7 @@ const posts = [];
 const faqs = [];
 
   const hero = home?.content?.hero || {};
-
+console.log("HOME DATA", home);
   return (
     <div data-testid="home-page">
       <Seo
