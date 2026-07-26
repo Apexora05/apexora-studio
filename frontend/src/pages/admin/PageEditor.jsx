@@ -140,17 +140,22 @@ export default function PageEditor() {
 
   if (!doc) return <p className="text-muted-foreground">Loading…</p>;
 
-  const setPath = (path, value) => setDoc((d) => { const c = cloneDeep(d); set(c, path, value); return c; });
+ const setPath = (path, value) => setDoc((d) => {
+  const c = cloneDeep(d);
+  if (!c.content) c.content = {};
+  set(c.content, path, value);
+  return c;
+});
 
   const save = async () => {
     setSaving(true);
-    try { await api.put(`/pages/${pageId}`, doc); toast.success("Page saved — live now"); }
+    try await api.put(`/pages/${pageId}`, { content: doc.content }); toast.success("Page saved — live now"); }
     catch (_) { toast.error("Save failed"); }
     finally { setSaving(false); }
   };
 
   const renderField = (f) => {
-    const value = get(doc, f.path);
+   const value = get(doc?.content, f.path);
     if (f.type === "image") return <MediaPicker key={f.path} label={f.label} value={value} onChange={(v) => setPath(f.path, v)} testid={`page-${f.path}`} />;
     if (f.type === "tags")
       return (
