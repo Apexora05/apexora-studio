@@ -132,17 +132,6 @@ async def update_page(
     save_all("pages", pages)
 
     return payload
-save_all("pages", pages)
-
-return payload
-
-    if not found:
-        payload["id"] = page_id
-        pages.append(payload)
-
-    save_all("pages", pages)
-
-    return payload
 
 
 # ======================================================
