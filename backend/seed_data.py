@@ -1,6 +1,5 @@
 from database import read_collection, write_collection
 from datetime import datetime, timezone
-import uuid
 
 
 def now():
@@ -25,7 +24,6 @@ async def seed_all():
     ]
 
     for collection in collections:
-
         data = read_collection(collection)
 
         if data is None:
@@ -35,7 +33,6 @@ async def seed_all():
     settings = read_collection("settings")
 
     if not settings:
-
         write_collection(
             "settings",
             [
