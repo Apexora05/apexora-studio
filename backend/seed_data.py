@@ -62,7 +62,7 @@ if not settings:
     )
         pages = read_collection("pages")
 
-    if not pages:
+    if true:
 
         write_collection(
             "pages",
