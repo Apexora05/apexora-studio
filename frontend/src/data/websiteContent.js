@@ -4,11 +4,11 @@ home:{
 hero:{
 eyebrow:"WEB DESIGN STUDIO",
 
-headline:"Websites that change how people perceive your business.",
+headline: "Websites built to make your brand impossible to ignore.",
 
-description:"We design premium digital experiences that build trust and help ambitious brands grow.",
+description: "Premium websites designed to build trust, authority, and growth for ambitious brands.",
 
-image:"/images/hero.webp",
+frontend/public/images/hero.webp
 
 button1:"View Portfolio",
 
