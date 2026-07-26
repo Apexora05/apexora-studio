@@ -48,3 +48,60 @@ async def seed_all():
                 }
             ]
         )
+if not settings:
+
+    write_collection(
+        "settings",
+        [
+            {
+                "id": "site",
+                "site_name": "Apexora Studio",
+                "created_at": now()
+            }
+        ]
+    )
+        pages = read_collection("pages")
+
+    if not pages:
+
+        write_collection(
+            "pages",
+            [
+                {
+                    "id": "home",
+                    "title": "Homepage",
+                    "content": {},
+                    "created_at": now()
+                },
+                {
+                    "id": "about",
+                    "title": "About",
+                    "content": {},
+                    "created_at": now()
+                },
+                {
+                    "id": "services",
+                    "title": "Services",
+                    "content": {},
+                    "created_at": now()
+                },
+                {
+                    "id": "portfolio",
+                    "title": "Portfolio",
+                    "content": {},
+                    "created_at": now()
+                },
+                {
+                    "id": "blog",
+                    "title": "Blog",
+                    "content": {},
+                    "created_at": now()
+                },
+                {
+                    "id": "contact",
+                    "title": "Contact",
+                    "content": {},
+                    "created_at": now()
+                }
+            ]
+        )
