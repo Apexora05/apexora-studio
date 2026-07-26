@@ -32,8 +32,6 @@ class ServiceCreate(BaseModel):
     image: Optional[str] = ""
     slug: Optional[str] = ""
 
-UPLOAD_DIR = Path("uploads")
-UPLOAD_DIR.mkdir(exist_ok=True)
 
 
 def now():
@@ -695,7 +693,7 @@ async def delete_user(
         "users",
         item_id,
     )
-    # ======================================================
+ # ======================================================
 # MEDIA
 # ======================================================
 
@@ -705,26 +703,17 @@ async def upload_media(
     user=Depends(get_current_user),
 ):
 
-    file_id = uid()
-
-    extension = file.filename.split(".")[-1]
-
-    filename = f"{file_id}.{extension}"
-
-    path = UPLOAD_DIR / filename
-
-    content = await file.read()
-
-    with open(path, "wb") as buffer:
-        buffer.write(content)
-
+    result = cloudinary.uploader.upload(
+        file.file,
+        folder="apexora"
+    )
 
     media = get_all("media")
 
     item = {
-        "id": file_id,
+        "id": uid(),
         "filename": file.filename,
-        "url": f"/api/media/{filename}",
+        "url": result["secure_url"],
         "created_at": now(),
     }
 
@@ -735,29 +724,12 @@ async def upload_media(
     return item
 
 
-
-@api.get("/media/{filename}")
-async def serve_media(filename: str):
-
-    path = UPLOAD_DIR / filename
-
-    if not path.exists():
-        raise HTTPException(
-            status_code=404,
-            detail="File not found",
-        )
-
-    return FileResponse(path)
-
-
-
 @api.get("/admin/media")
 async def list_media(
     user=Depends(get_current_user),
 ):
 
     return get_all("media")
-
 
 
 @api.delete("/admin/media/{item_id}")
