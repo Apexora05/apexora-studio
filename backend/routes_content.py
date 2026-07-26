@@ -107,17 +107,32 @@ async def get_page(page_id: str):
     raise HTTPException(status_code=404, detail="Page not found")
 
 
-for i, page in enumerate(pages):
+@api.put("/pages/{page_id}")
+async def update_page(
+    page_id: str,
+    payload: dict,
+    user=Depends(get_current_user),
+):
 
-    if page.get("id") == page_id:
+    pages = get_all("pages")
 
-        page["content"] = payload.get("content", page.get("content", {}))
-        page["id"] = page_id
+    found = False
 
-        pages[i] = page
+    for i, page in enumerate(pages):
 
-        found = True
-        break
+        if page.get("id") == page_id:
+
+            page["content"] = payload.get(
+                "content",
+                page.get("content", {})
+            )
+
+            page["id"] = page_id
+
+            pages[i] = page
+
+            found = True
+            break
 
     if not found:
         payload["id"] = page_id
