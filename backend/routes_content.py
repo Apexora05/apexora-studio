@@ -113,34 +113,25 @@ async def update_page(
     payload: dict,
     user=Depends(get_current_user),
 ):
-
     pages = get_all("pages")
 
-        found = False
+    found = False
 
     for i, page in enumerate(pages):
-
         if page.get("id") == page_id:
-            page["content"] = payload
+            page["content"] = payload.get("content", payload)
             page["id"] = page_id
             pages[i] = page
             found = True
             break
 
-            for i, page in enumerate(pages):
+    if not found:
+        payload["id"] = page_id
+        pages.append(payload)
 
-    if page.get("id") == page_id:
-        page["content"] = payload
-        page["id"] = page_id
-        pages[i] = page
-        found = True
-        break
+    save_all("pages", pages)
 
-
-if not found:
-    payload["id"] = page_id
-    pages.append(payload)
-
+    return payload
 save_all("pages", pages)
 
 return payload
