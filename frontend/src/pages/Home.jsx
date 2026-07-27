@@ -40,13 +40,13 @@ const testimonials = [];
 const posts = [];
 const faqs = [];
 
-  const hero = page.hero || {};
+ const hero = home?.content?.hero || {};
 console.log("HOME DATA", home);
   return (
     <div data-testid="home-page">
       <Seo
-        title={home?.seo?.meta_title || "Apexora Studio — Premium Web Design That Converts"}
-        description={home?.seo?.meta_description}
+       title={home?.seo?.meta_title || "Apexora Studio – Premium Web Design That Converts"}
+description={home?.seo?.meta_description || ""}
         image={resolveMedia(hero.image)}
         path="/"
         schema={{
