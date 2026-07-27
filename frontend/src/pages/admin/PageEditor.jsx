@@ -148,11 +148,17 @@ export default function PageEditor() {
 });
 
   const save = async () => {
-    setSaving(true);
-    try await api.put(`/pages/${pageId}`, { content: doc.content }); toast.success("Page saved — live now"); }
-    catch (_) { toast.error("Save failed"); }
-    finally { setSaving(false); }
-  };
+  setSaving(true);
+
+  try {
+    await api.put(`/pages/${pageId}`, { content: doc.content });
+    toast.success("Page saved — live now");
+  } catch (_) {
+    toast.error("Save failed");
+  } finally {
+    setSaving(false);
+  }
+};
 
   const renderField = (f) => {
    const value = get(doc?.content, f.path);
