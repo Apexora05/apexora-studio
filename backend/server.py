@@ -43,13 +43,10 @@ async def on_startup():
         await create_indexes()
     except Exception as e:
         logger.error(f"Index creation issue: {e}")
-    try:
-    await seed_admin()
-except Exception as e:
-    logger.error(f"Admin seed issue: {e}")
 
-# Content seed disabled
-# try:
-#     await seed_all()
-# except Exception as e:
-#     logger.error(f"Content seed issue: {e}")
+    try:
+        await seed_admin()
+    except Exception as e:
+        logger.error(f"Admin seed issue: {e}")
+
+    # Content seed disabled to prevent overwriting admin content
