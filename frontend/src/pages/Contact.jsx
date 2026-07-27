@@ -30,7 +30,7 @@ export default function Contact() {
   const { settings } = useSite();
   const { data: page } = useGet("/pages/contact");
   const { data: seo } = useGet("/seo-by-path?path=/contact");
-  const hero = page?.hero || {};
+  const hero = page?.content?.hero || page?.content?.content?.hero || {};
   const [form, setForm] = useState({ name: "", email: "", company: "", website: "", phone: "", budget: "", message: "", honeypot: "" });
   const [submitting, setSubmitting] = useState(false);
   const [done, setDone] = useState(false);
