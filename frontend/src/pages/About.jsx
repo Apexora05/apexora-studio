@@ -12,7 +12,7 @@ export default function About() {
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start end", "end start"] });
   const y = useTransform(scrollYProgress, [0, 1], ["-10%", "12%"]);
 
-  const hero = about?.hero || {};
+  about?.content?.hero || about?.content?.content?.hero || {}
 
   return (
     <div data-testid="about-page">
