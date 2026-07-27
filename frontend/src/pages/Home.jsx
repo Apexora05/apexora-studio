@@ -15,7 +15,6 @@ import Seo from "@/components/site/Seo";
 import { Reveal, LineReveal, Stagger, StaggerItem } from "@/components/site/Reveal";
 import { BtnLink, Eyebrow, SectionHeading } from "@/components/site/ui";
 import ProjectCard from "@/components/site/ProjectCard";
-import { content } from "@/data/websiteContent";
 function HeroImage({ src }) {
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end start"] });
