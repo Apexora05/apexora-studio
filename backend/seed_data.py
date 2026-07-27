@@ -45,6 +45,9 @@ async def seed_all():
         )
 
 
+    existing_pages = read_collection("pages")
+
+if not existing_pages:
     write_collection(
         "pages",
         [
@@ -60,29 +63,3 @@ async def seed_all():
                 "content": {},
                 "created_at": now()
             },
-            {
-                "id": "services",
-                "title": "Services",
-                "content": {},
-                "created_at": now()
-            },
-            {
-                "id": "portfolio",
-                "title": "Portfolio",
-                "content": {},
-                "created_at": now()
-            },
-            {
-                "id": "blog",
-                "title": "Blog",
-                "content": {},
-                "created_at": now()
-            },
-            {
-                "id": "contact",
-                "title": "Contact",
-                "content": {},
-                "created_at": now()
-            }
-        ]
-    )
