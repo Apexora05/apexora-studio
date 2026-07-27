@@ -151,7 +151,7 @@ export default function PageEditor() {
   setSaving(true);
 
   try {
-    await api.put(`/pages/${pageId}`, { content: doc.content });
+    await api.put(`/pages/${pageId}`, doc.content);
     toast.success("Page saved — live now");
   } catch (_) {
     toast.error("Save failed");
