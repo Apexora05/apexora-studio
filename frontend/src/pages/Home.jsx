@@ -34,7 +34,6 @@ function HeroImage({ src }) {
 }
 
 const { data: home } = useGet("/pages/home");
-const page = home?.content || {};
 const projects = [];
 const services = [];
 const testimonials = [];
