@@ -32,7 +32,7 @@ function HeroImage({ src }) {
     </div>
   );
 }
-
+export default function Home() {
 const { data: home } = useGet("/pages/home");
 const projects = [];
 const services = [];
@@ -45,8 +45,8 @@ console.log("HOME DATA", home);
   return (
     <div data-testid="home-page">
       <Seo
-       title={home?.seo?.meta_title || "Apexora Studio – Premium Web Design That Converts"}
-description={home?.seo?.meta_description || ""}
+      title={home?.content?.seo?.meta_title || "Apexora Studio – Premium Web Design That Converts"}
+description={home?.content?.seo?.meta_description || ""}
         image={resolveMedia(hero.image)}
         path="/"
         schema={{
