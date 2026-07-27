@@ -25,12 +25,10 @@ app.include_router(content_router)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_credentials=True,
-    allow_origins=[
-    "https://apexora.onrender.com",
-    "http://localhost:3000",
-    "http://localhost:5173",
-],
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
