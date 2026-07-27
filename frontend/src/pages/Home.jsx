@@ -34,13 +34,14 @@ function HeroImage({ src }) {
 }
 
 const { data: home } = useGet("/pages/home");
+const page = home?.content || {};
 const projects = [];
 const services = [];
 const testimonials = [];
 const posts = [];
 const faqs = [];
 
-  const hero = home?.content?.hero || {};
+  const hero = page.hero || {};
 console.log("HOME DATA", home);
   return (
     <div data-testid="home-page">
