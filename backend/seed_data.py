@@ -45,7 +45,7 @@ async def seed_all():
         )
     pages = read_collection("pages")
 
-      if True:
+       if True:
         write_collection(
             "pages",
             [
