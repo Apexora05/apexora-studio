@@ -45,11 +45,11 @@ async def on_startup():
         logger.error(f"Index creation issue: {e}")
 
         try:
-        await seed_admin()
-    except Exception as e:
-        logger.error(f"Admin seed issue: {e}")
+    await seed_admin()
+except Exception as e:
+    logger.error(f"Admin seed issue: {e}")
 
-    try:
-        await seed_all()
-    except Exception as e:
-        logger.error(f"Content seed issue: {e}")
+try:
+    await seed_all()
+except Exception as e:
+    logger.error(f"Content seed issue: {e}")
