@@ -50,6 +50,6 @@ except Exception as e:
     logger.error(f"Admin seed issue: {e}")
 
 try:
-    await seed_all()
+     await seed_all()
 except Exception as e:
     logger.error(f"Content seed issue: {e}")
