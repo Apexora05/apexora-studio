@@ -43,7 +43,7 @@ async def seed_all():
                 }
             ]
         )
-    pages = read_collection("pages")
+   pages = read_collection("pages")
 
 if not pages:
     write_collection(
