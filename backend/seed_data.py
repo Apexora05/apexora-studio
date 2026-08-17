@@ -7,7 +7,6 @@ def now():
 
 
 async def seed_all():
-
     collections = [
         "settings",
         "pages",
@@ -29,7 +28,6 @@ async def seed_all():
         if data is None:
             write_collection(collection, [])
 
-
     settings = read_collection("settings")
 
     if not settings:
@@ -43,7 +41,8 @@ async def seed_all():
                 }
             ]
         )
-       pages = read_collection("pages")
+
+    pages = read_collection("pages")
 
     if not pages:
         write_collection(
