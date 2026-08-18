@@ -37,6 +37,19 @@ const SCHEMAS = {
       { path: "industries.eyebrow", label: "Eyebrow" },
       { path: "industries.title", label: "Title" },
       { path: "industries.items", label: "Industries", type: "tags" },
+          { section: "Services", fields: [
+      { path: "services.eyebrow", label: "Eyebrow" },
+      { path: "services.title", label: "Title", type: "textarea" },
+      {
+        path: "services.items",
+        label: "Services",
+        type: "objectlist",
+        subfields: [
+          { key: "title", label: "Title" },
+          { key: "summary", label: "Summary", type: "textarea" }
+        ]
+      }
+    ]},
     ]},
     { section: "Final CTA", fields: [
       { path: "cta.title", label: "Title", type: "textarea" },
