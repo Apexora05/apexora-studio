@@ -1,7 +1,10 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { api } from "@/lib/api";
 
-const SiteContext = createContext({ settings: null });
+const SiteContext = createContext({
+  settings: null,
+  pages: {},
+});
 
 const FALLBACK = {
   brand_name: "Apexora Studio",
