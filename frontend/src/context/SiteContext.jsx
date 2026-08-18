@@ -23,24 +23,24 @@ const FALLBACK = {
 export function SiteProvider({ children }) {
   const [settings, setSettings] = useState(FALLBACK);
   const [pages, setPages] = useState({});
-const refresh = async () => {
-  try {
-    const settingsRes = await api.get("/settings");
-    const homeRes = await api.get("/pages/home");
 
-    setSettings({
-      ...FALLBACK,
-      ...settingsRes.data
-    });
+  const refresh = async () => {
+    try {
+      const settingsRes = await api.get("/settings");
+      const homeRes = await api.get("/pages/home");
 
-    setPages({
-      home: homeRes.data
-    });
+      setSettings({
+        ...FALLBACK,
+        ...settingsRes.data,
+      });
 
-  } catch (error) {
-    console.log(error);
-  }
-};
+      setPages({
+        home: homeRes.data,
+      });
+
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   useEffect(() => {
